@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+    <!--bean id="propertyConfigurer"
+    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+    p:location="/WEB-INF/jdbc.properties" />
+
+<bean id="dataSource"
+    class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+    p:driverClassName="${jdbc.driverClassName}"
+    p:url="${jdbc.url}"
+    p:username="${jdbc.username}"
+    p:password="${jdbc.password}" /-->
+    
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value="org.sqlite.JDBC" />
+        <property name="url" value = "jdbc:sqlite:/Users/sho7/Documents/Enterprise_Software_Design/chinook.db" />
+    </bean>
+    
+    <bean id="dbcpChinookService" class="com.mycompany.chinookdb.service.DbcpChinookService"/>
+    
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="dataSource" />
+    </bean>
+
+    <!-- ADD PERSISTENCE SUPPORT HERE (jpa, hibernate, etc) -->
+    <context:component-scan base-package="com.mycompany.chinookdb"/>
+</beans>
